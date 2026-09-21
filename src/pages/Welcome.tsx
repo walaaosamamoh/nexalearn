@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import GlassCard from "../../components/ui/GlassCard";
+import GlassCard from "../components/ui/GlassCard";
 
 export default function Welcome() {
     const navigate = useNavigate()

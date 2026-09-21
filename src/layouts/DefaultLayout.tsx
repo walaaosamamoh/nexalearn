@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 export default function DefaultLayout() {
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen flex flex-col">
       {/* Navbar */}
       <header className="border-b border-white/10">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
@@ -53,12 +53,12 @@ export default function DefaultLayout() {
       </header>
 
       {/* Page Content */}
-      <main className="min-h-[calc(100vh-145px)]">
+      <main className="flex-1 min-h-screen overflow-auto">
         <Outlet />
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 px-6 py-8">
+      <footer className="shrink-0 border-t border-white/10 px-6 py-8">
         <div className="mx-auto max-w-7xl text-center">
           <p className="text-sm text-slate-400">
             © {new Date().getFullYear()}{" "}

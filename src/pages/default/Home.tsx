@@ -1,3 +1,4 @@
+import CTASection from "../../components/home/CTAsection";
 import HeroSection from "../../components/home/HeroSection";
 import HowItWorks from "../../components/home/HowItWorks";
 import PopularCourses from "../../components/home/PopularCourses";
@@ -10,6 +11,7 @@ export default function Home() {
       <HeroSection />
       <PopularCourses />
       <HowItWorks />
+      <CTASection />
     </main>
   );
 }

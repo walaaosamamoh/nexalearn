@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -11,50 +11,67 @@ export default function Navbar() {
 
         {/* Navigation */}
         <div className="hidden items-center gap-8 md:flex">
-          <Link
+          <NavLink
             to="/home"
-            className="text-sm font-medium text-slate-300 transition hover:text-white"
+            className={({ isActive }) =>
+              `text-sm font-medium transition ${
+                isActive ? "text-violet-400" : "text-slate-300 hover:text-white"
+              }`
+            }
+            // className="text-sm font-medium text-slate-300 transition hover:text-white"
           >
             Home
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/courses"
-            className="text-sm font-medium text-slate-300 transition hover:text-white"
+            className={({ isActive }) =>
+              `text-sm font-medium transition ${
+                isActive ? "text-violet-400" : "text-slate-300 hover:text-white"
+              }`
+            }
           >
             Courses
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/about"
-            className="text-sm font-medium text-slate-300 transition hover:text-white"
+            className={({ isActive }) =>
+              `text-sm font-medium transition ${
+                isActive ? "text-violet-400" : "text-slate-300 hover:text-white"
+              }`
+            }
           >
             About
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/contact"
-            className="text-sm font-medium text-slate-300 transition hover:text-white"
+            className={({ isActive }) =>
+              `text-sm font-medium transition ${
+                isActive ? "text-violet-400" : "text-slate-300 hover:text-white"
+              }`
+            }
           >
             Contact
-          </Link>
+          </NavLink>
         </div>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <Link
+          <NavLink
             to="/login"
             className="hidden text-sm font-medium text-slate-300 transition hover:text-white sm:block"
           >
             Log in
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/register"
             className="rounded-xl bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-400"
           >
             Get started
-          </Link>
+          </NavLink>
         </div>
       </nav>
     </header>

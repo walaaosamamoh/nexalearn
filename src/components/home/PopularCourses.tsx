@@ -1,34 +1,27 @@
-import { Link } from "react-router-dom"
-import CourseCard from "../courses/courseCard"
-
+import { Link } from "react-router-dom";
+import CourseCard from "../courses/courseCard";
+import { useQuery } from "@apollo/client/react";
+import { GET_COURSES } from "../../graphql/queries/courses";
+import type { GetCoursesData } from "../../graphql/types";
 
 export default function PopularCourses() {
-  const courses = [
-    {
-      title: "Modern React Development",
-      category: "Development",
-      instructor: "Alex Morgan",
-      level: "Intermediate",
-      duration: "8 hours",
-      image: "/courses/react.jpg",
-    },
-    {
-      title: "UI/UX Design Fundamentals",
-      category: "Design",
-      instructor: "Sarah Wilson",
-      level: "Beginner",
-      duration: "6 hours",
-      image: "/courses/uiux.jpg",
-    },
-    {
-      title: "TypeScript for Beginners",
-      category: "Development",
-      instructor: "Daniel Lee",
-      level: "Beginner",
-      duration: "5 hours",
-      image: "/courses/typescript.jpg",
-    },
-  ]
+  const { data, loading, error } = useQuery<GetCoursesData>(GET_COURSES);
+
+  if (loading) {
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-12">
+        <p className="text-center text-slate-400">Loading courses...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-12">
+        <p className="text-center text-red-400">Failed to load courses.</p>
+      </section>
+    );
+  }
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-12">
@@ -44,8 +37,8 @@ export default function PopularCourses() {
           </h2>
 
           <p className="mt-3 max-w-xl text-slate-400">
-            Explore courses designed to help you build practical skills and
-            keep moving forward.
+            Explore courses designed to help you build practical skills and keep
+            moving forward.
           </p>
         </div>
 
@@ -59,7 +52,7 @@ export default function PopularCourses() {
 
       {/* Courses */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {courses.map((course) => (
+        {data?.courses.slice(0, 3).map((course) => (
           <CourseCard key={course.title} {...course} />
         ))}
       </div>
@@ -74,5 +67,5 @@ export default function PopularCourses() {
         </Link>
       </div>
     </section>
-  )
+  );
 }

@@ -1,5 +1,6 @@
-import { Outlet } from "react-router-dom"
-import Navbar from "../components/common/Navbar"
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/common/Navbar";
+import Footer from "../components/common/Footer";
 
 export default function DefaultLayout() {
   return (
@@ -13,15 +14,7 @@ export default function DefaultLayout() {
       </main>
 
       {/* Footer */}
-      <footer className="shrink-0 border-t border-white/10 px-6 py-8">
-        <div className="mx-auto max-w-7xl text-center">
-          <p className="text-sm text-slate-400">
-            © {new Date().getFullYear()}{" "}
-            <span className="font-medium text-violet-400">NexaLearn</span>
-            {" "}· Learn. Grow. Achieve.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
-  )
+  );
 }

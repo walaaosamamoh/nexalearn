@@ -3,6 +3,7 @@ import DefaultLayout from "../layouts/DefaultLayout";
 import Home from "../pages/default/Home";
 import NotFound from "../pages/NotFound";
 import Welcome from "../pages/Welcome";
+import Courses from "../pages/default/Courses";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/courses",
+        element: <Courses />,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import CTASection from "../../components/home/CTAsection";
+import CTASection from "../../components/home/CTASection";
 import HeroSection from "../../components/home/HeroSection";
 import HowItWorks from "../../components/home/HowItWorks";
 import PopularCourses from "../../components/home/PopularCourses";

@@ -15,4 +15,6 @@ export interface Course {
   level: CourseLevel
   duration: string
   image: string
+  whatYoullLearn: string[]
+  lessons: string[]
 }

@@ -1,5 +1,5 @@
-const { ApolloServer } = require("@apollo/server")
-const { startStandaloneServer } = require("@apollo/server/standalone")
+const { ApolloServer } = require("@apollo/server");
+const { startStandaloneServer } = require("@apollo/server/standalone");
 
 const courses = [
   {
@@ -12,7 +12,26 @@ const courses = [
     level: "Intermediate",
     duration: "8 hours",
     image: "/courses/react.jpg",
+    whatYoullLearn: [
+      "Build reusable React components",
+      "Work with props, state, and hooks",
+      "Manage application state effectively",
+      "Build responsive React interfaces",
+      "Follow modern React best practices",
+      "Structure scalable React applications",
+    ],
+    lessons: [
+      "React Fundamentals",
+      "Components and Props",
+      "State and Event Handling",
+      "React Hooks",
+      "Forms and User Input",
+      "State Management",
+      "React Router",
+      "Building the Final Project",
+    ],
   },
+
   {
     id: "2",
     title: "TypeScript for Beginners",
@@ -23,7 +42,25 @@ const courses = [
     level: "Beginner",
     duration: "5 hours",
     image: "/courses/typescript.jpg",
+    whatYoullLearn: [
+      "Understand TypeScript fundamentals",
+      "Work with basic and advanced types",
+      "Create interfaces and type aliases",
+      "Type functions and objects",
+      "Work with generics",
+      "Use TypeScript in React projects",
+    ],
+    lessons: [
+      "Introduction to TypeScript",
+      "Basic Types",
+      "Arrays and Objects",
+      "Interfaces and Type Aliases",
+      "Functions and Generics",
+      "Union and Intersection Types",
+      "TypeScript with React",
+    ],
   },
+
   {
     id: "3",
     title: "UI/UX Design Fundamentals",
@@ -34,7 +71,25 @@ const courses = [
     level: "Beginner",
     duration: "6 hours",
     image: "/courses/uiux.jpg",
+    whatYoullLearn: [
+      "Understand UI and UX fundamentals",
+      "Create user-centered designs",
+      "Build effective wireframes",
+      "Use layout and visual hierarchy",
+      "Design consistent interfaces",
+      "Create better user experiences",
+    ],
+    lessons: [
+      "Introduction to UI/UX",
+      "Understanding User Needs",
+      "User Flows",
+      "Wireframing",
+      "Visual Hierarchy",
+      "Color and Typography",
+      "Designing a Complete Interface",
+    ],
   },
+
   {
     id: "4",
     title: "Advanced JavaScript",
@@ -45,7 +100,27 @@ const courses = [
     level: "Advanced",
     duration: "10 hours",
     image: "/courses/javascript.jpg",
+    whatYoullLearn: [
+      "Understand advanced JavaScript concepts",
+      "Work with closures and higher-order functions",
+      "Master asynchronous JavaScript",
+      "Work with Promises and async/await",
+      "Understand JavaScript modules",
+      "Use modern JavaScript patterns",
+    ],
+    lessons: [
+      "Advanced Functions",
+      "Closures and Scope",
+      "This and Execution Context",
+      "Promises",
+      "Async and Await",
+      "JavaScript Modules",
+      "Advanced Array Methods",
+      "Design Patterns",
+      "Final JavaScript Project",
+    ],
   },
+
   {
     id: "5",
     title: "Figma UI Design",
@@ -56,7 +131,26 @@ const courses = [
     level: "Intermediate",
     duration: "7 hours",
     image: "/courses/figma.jpg",
+    whatYoullLearn: [
+      "Navigate and organize Figma projects",
+      "Create professional UI layouts",
+      "Use components and variants",
+      "Build reusable design systems",
+      "Create interactive prototypes",
+      "Collaborate with design teams",
+    ],
+    lessons: [
+      "Getting Started with Figma",
+      "Frames and Layouts",
+      "Typography and Colors",
+      "Components",
+      "Variants and Auto Layout",
+      "Design Systems",
+      "Prototyping",
+      "Building a Complete UI",
+    ],
   },
+
   {
     id: "6",
     title: "Web Development Fundamentals",
@@ -67,7 +161,27 @@ const courses = [
     level: "Beginner",
     duration: "9 hours",
     image: "/courses/web-development.jpg",
+    whatYoullLearn: [
+      "Build semantic HTML structures",
+      "Style websites with modern CSS",
+      "Create responsive layouts",
+      "Use Flexbox and CSS Grid",
+      "Add interactivity with JavaScript",
+      "Build a complete responsive website",
+    ],
+    lessons: [
+      "HTML Fundamentals",
+      "Semantic HTML",
+      "CSS Fundamentals",
+      "Flexbox",
+      "CSS Grid",
+      "Responsive Design",
+      "JavaScript Basics",
+      "DOM Manipulation",
+      "Final Website Project",
+    ],
   },
+
   {
     id: "7",
     title: "Git & GitHub Essentials",
@@ -78,7 +192,26 @@ const courses = [
     level: "Beginner",
     duration: "4 hours",
     image: "/courses/github.jpg",
+    whatYoullLearn: [
+      "Understand Git and version control",
+      "Create and manage repositories",
+      "Work with branches",
+      "Resolve merge conflicts",
+      "Create pull requests",
+      "Collaborate with GitHub",
+    ],
+    lessons: [
+      "Introduction to Git",
+      "Creating a Repository",
+      "Commits and History",
+      "Branches",
+      "Merging and Conflicts",
+      "GitHub Repositories",
+      "Pull Requests",
+      "Team Collaboration",
+    ],
   },
+
   {
     id: "8",
     title: "Digital Marketing Basics",
@@ -89,7 +222,26 @@ const courses = [
     level: "Beginner",
     duration: "6 hours",
     image: "/courses/marketing.jpg",
+    whatYoullLearn: [
+      "Understand digital marketing fundamentals",
+      "Create a content strategy",
+      "Understand social media marketing",
+      "Learn basic SEO concepts",
+      "Plan digital campaigns",
+      "Measure marketing performance",
+    ],
+    lessons: [
+      "Digital Marketing Fundamentals",
+      "Understanding Your Audience",
+      "Content Strategy",
+      "Social Media Marketing",
+      "SEO Basics",
+      "Email Marketing",
+      "Campaign Planning",
+      "Measuring Results",
+    ],
   },
+
   {
     id: "9",
     title: "Product Management",
@@ -100,6 +252,24 @@ const courses = [
     level: "Intermediate",
     duration: "8 hours",
     image: "/courses/product-management.jpg",
+    whatYoullLearn: [
+      "Understand the product management role",
+      "Identify user needs and problems",
+      "Define product goals",
+      "Prioritize product features",
+      "Create product roadmaps",
+      "Work with development teams",
+    ],
+    lessons: [
+      "Introduction to Product Management",
+      "Understanding Users",
+      "Product Discovery",
+      "Defining Product Goals",
+      "Feature Prioritization",
+      "Product Roadmaps",
+      "Working with Teams",
+      "Launching a Product",
+    ],
   },
 ];
 
@@ -113,26 +283,32 @@ const typeDefs = `#graphql
     level: String!
     duration: String!
     image: String!
+    whatYoullLearn: [String!]!
+    lessons: [String!]!
   }
 
   type Query {
-    courses: [Course!]!
+    courses: [Course!]!,
+    course(id: ID!): Course
   }
-`
+`;
 
 const resolvers = {
   Query: {
     courses: () => courses,
+    course: (_, args) => {
+      return courses.find((course) => course.id === args.id);
+    },
   },
-}
+};
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-})
+});
 
 startStandaloneServer(server, {
   listen: { port: 4000 },
 }).then(({ url }) => {
-  console.log(`GraphQL server running at ${url}`)
-})
+  console.log(`GraphQL server running at ${url}`);
+});

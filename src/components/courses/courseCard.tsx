@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom"
+
 interface CourseCardProps {
+  id: string
   title: string
   category: string
   instructor: string
@@ -8,6 +11,7 @@ interface CourseCardProps {
 }
 
 export default function CourseCard({
+  id,
   title,
   category,
   instructor,
@@ -16,7 +20,7 @@ export default function CourseCard({
   image,
 }: CourseCardProps) {
   return (
-    <article className="group overflow-hidden rounded-2xl border border-white/10 bg-slate-900 transition duration-300 hover:-translate-y-1 hover:border-violet-400/40">
+    <Link to={`/courses/${id}`} className="group overflow-hidden rounded-2xl border border-white/10 bg-slate-900 transition duration-300 hover:-translate-y-1 hover:border-violet-400/40">
       {/* Image */}
       <div className="aspect-video overflow-hidden">
         <img
@@ -45,6 +49,6 @@ export default function CourseCard({
           <span>{duration}</span>
         </div>
       </div>
-    </article>
+    </Link>
   )
 }

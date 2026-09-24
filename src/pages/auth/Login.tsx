@@ -4,10 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../schemas/LoginSchema";
 import { useMutation } from "@apollo/client/react";
 import { LOGIN } from "../../graphql/mutations/auth";
+import { useAuthStore } from "../../stores/authStore";
 
+
+interface LoginResponse {
+  login: {
+    id: string
+    name: string
+    email: string
+  }
+}
 export default function Login() {
-  const [login, { loading, error }] = useMutation(LOGIN);
+  const [login, { loading, error }] = useMutation<LoginResponse>(LOGIN);
   const navigate = useNavigate()
+  const {setUser} = useAuthStore()
 
   const form = useForm({
     defaultValues: {
@@ -21,7 +31,8 @@ export default function Login() {
       try {
         const result = await login({ variables: value });
         console.log(result.data);
-        if(result.data){
+        if(result.data?.login){
+            setUser(result.data.login)
             navigate("/dashboard")
         }
       } catch (error) {

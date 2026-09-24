@@ -1,9 +1,14 @@
 import { useForm } from "@tanstack/react-form";
 import GlassCard from "../../components/ui/GlassCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../schemas/LoginSchema";
+import { useMutation } from "@apollo/client/react";
+import { LOGIN } from "../../graphql/mutations/auth";
 
 export default function Login() {
+  const [login, { loading, error }] = useMutation(LOGIN);
+  const navigate = useNavigate()
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -12,8 +17,16 @@ export default function Login() {
     validators: {
       onSubmit: loginSchema,
     },
-    onSubmit: ({ value }) => {
-      console.log(value);
+    onSubmit: async ({ value }) => {
+      try {
+        const result = await login({ variables: value });
+        console.log(result.data);
+        if(result.data){
+            navigate("/dashboard")
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -98,12 +111,17 @@ export default function Login() {
             )}
           </form.Field>
 
+          {error && (
+            <p className="text-center text-sm text-red-400">{error.message}</p>
+          )}
+
           {/* Submit */}
           <button
             type="submit"
+            disabled={loading}
             className="mt-5 w-full rounded-xl bg-violet-500 px-6 py-3 font-semibold text-white transition hover:bg-violet-400 sm:mt-6"
           >
-            Sign In
+            {loading ? "Signing in..." : "Sign In"}
           </button>
 
           {/* Divider */}

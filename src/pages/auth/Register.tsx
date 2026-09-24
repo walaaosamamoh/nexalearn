@@ -1,12 +1,14 @@
 import { useForm } from "@tanstack/react-form";
 import GlassCard from "../../components/ui/GlassCard";
 import { registerSchema } from "../../schemas/RegisterSchema";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client/react";
 import { REGISTER } from "../../graphql/mutations/auth";
 
 export default function Register() {
   const [register, { loading, error }] = useMutation(REGISTER);
+  const navigate = useNavigate()
+
   const form = useForm({
     defaultValues: {
       name: "",
@@ -20,6 +22,9 @@ export default function Register() {
       try {
         const result = await register({ variables: value });
         console.log(result.data);
+        if (result.data) {
+          navigate("/login");
+        }
       } catch (error) {
         console.log(error);
       }

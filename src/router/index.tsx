@@ -10,6 +10,9 @@ import CourseDetails from "../pages/default/CourseDetails";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import Dashboard from "../pages/dashboard/Dashboard";
+import DashboardLayout from "../layouts/DashboardLayout";
+import ProtectedRoutes from "../components/auth/ProtectedRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -46,13 +49,27 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/login",
-        element: <Login />
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register />
-      }
-    ]
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    element: <ProtectedRoutes />,
+    children: [
+      {
+        element: <DashboardLayout />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <Dashboard />,
+          },
+        ],
+      },
+    ],
   },
   {
     path: "*",

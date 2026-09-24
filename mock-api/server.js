@@ -1,6 +1,8 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 
+const users = [];
+
 const courses = [
   {
     id: "1",
@@ -274,6 +276,12 @@ const courses = [
 ];
 
 const typeDefs = `#graphql
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+  }
+
   type Course {
     id: ID!
     title: String!
@@ -291,6 +299,11 @@ const typeDefs = `#graphql
     courses: [Course!]!,
     course(id: ID!): Course
   }
+
+  type Mutation {
+    register(name: String!, email: String!, password: String!): User!,
+    login(email: String!, password: String!): User!
+  }
 `;
 
 const resolvers = {
@@ -298,6 +311,38 @@ const resolvers = {
     courses: () => courses,
     course: (_, args) => {
       return courses.find((course) => course.id === args.id);
+    },
+  },
+
+  Mutation: {
+    register: (_, { name, email, password }) => {
+      const existingUser = users.find((user) => user.email === email);
+
+      if (existingUser) {
+        throw new Error("Email is already registered");
+      }
+
+      const user = {
+        id: String(users.length + 1),
+        name,
+        email,
+        password,
+      };
+
+      users.push(user);
+
+      return user;
+    },
+
+    login: (_, { email, password }) => {
+      const existingUser = users.find((user) => user.email === email);
+      if (!existingUser) {
+        throw new Error("Email is not found");
+      }
+      if (existingUser.password !== password) {
+        throw new Error("Wrong password");
+      }
+      return existingUser;
     },
   },
 };

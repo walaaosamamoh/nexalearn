@@ -2,8 +2,11 @@ import { useForm } from "@tanstack/react-form";
 import GlassCard from "../../components/ui/GlassCard";
 import { registerSchema } from "../../schemas/RegisterSchema";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client/react";
+import { REGISTER } from "../../graphql/mutations/auth";
 
 export default function Register() {
+  const [register, { loading, error }] = useMutation(REGISTER);
   const form = useForm({
     defaultValues: {
       name: "",
@@ -13,8 +16,13 @@ export default function Register() {
     validators: {
       onSubmit: registerSchema,
     },
-    onSubmit: ({ value }) => {
-      console.log(value);
+    onSubmit: async ({ value }) => {
+      try {
+        const result = await register({ variables: value });
+        console.log(result.data);
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -126,12 +134,17 @@ export default function Register() {
             )}
           </form.Field>
 
+          {error && (
+            <p className="text-center text-sm text-red-400">{error.message}</p>
+          )}
+
           {/* Submit */}
           <button
             type="submit"
+            disabled={loading}
             className="mt-5 w-full rounded-xl bg-violet-500 px-6 py-3 font-semibold text-white transition hover:bg-violet-400 sm:mt-6"
           >
-            Create Account
+            {loading ? "Creating account..." : "Create Account"}
           </button>
 
           {/* Divider */}

@@ -7,3 +7,11 @@ export interface GetCoursesData {
 export interface GetCourseData {
   course: Course | null
 }
+
+export interface EnrollCourseData {
+  enroll: {
+    userId: string
+    courseId: string
+    progress: number
+  }
+}

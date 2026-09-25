@@ -1,12 +1,44 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { GET_COURSE } from "../../graphql/queries/course";
-import { useQuery } from "@apollo/client/react";
-import type { GetCourseData } from "../../graphql/types";
+import { useMutation, useQuery } from "@apollo/client/react";
+import type { EnrollCourseData, GetCourseData } from "../../graphql/types";
+import { useAuthStore } from "../../stores/authStore";
+import { ENROLL_COURSE } from "../../graphql/mutations/enrollment";
 
 export default function CourseDetails() {
   const { id } = useParams();
+  const user = useAuthStore((state) => state.user);
+  const navigate = useNavigate();
 
-  const { data, loading, error } = useQuery<GetCourseData>(GET_COURSE, {variables:{id}, skip: !id,})
+  const [enrollCourse, { loading: enrollLoading }] =
+    useMutation<EnrollCourseData>(ENROLL_COURSE);
+
+  const handleStartLearning = async () => {
+    if (!course) return;
+
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await enrollCourse({
+        variables: {
+          userId: user.id,
+          courseId: course.id,
+        },
+      });
+
+      navigate(`/learn/${course.id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { data, loading, error } = useQuery<GetCourseData>(GET_COURSE, {
+    variables: { id },
+    skip: !id,
+  });
   if (loading) {
     return (
       <main className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-12">
@@ -99,12 +131,13 @@ export default function CourseDetails() {
               </div>
             </div>
 
-            <Link
-              to={`/learn/${course.id}`}
+            <button
+              onClick={handleStartLearning}
+              disabled={enrollLoading}
               className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-violet-500 px-6 py-3.5 font-semibold text-white transition hover:bg-violet-400 sm:w-auto"
             >
-              Start Learning
-            </Link>
+              {enrollLoading ? "Enrolling..." : "Start Learning"}
+            </button>
           </div>
         </div>
       </section>

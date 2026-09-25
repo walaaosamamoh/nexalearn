@@ -3,6 +3,8 @@ const { startStandaloneServer } = require("@apollo/server/standalone");
 
 const users = [];
 
+const enrollments = [];
+
 const courses = [
   {
     id: "1",
@@ -282,6 +284,12 @@ const typeDefs = `#graphql
     email: String!
   }
 
+  type Enrollment {
+    userId: ID!
+    courseId: ID!
+    progress: Int!
+  }
+
   type Course {
     id: ID!
     title: String!
@@ -303,6 +311,7 @@ const typeDefs = `#graphql
   type Mutation {
     register(name: String!, email: String!, password: String!): User!,
     login(email: String!, password: String!): User!
+    enroll(userId: ID!, courseId: ID!): Enrollment!
   }
 `;
 
@@ -343,6 +352,21 @@ const resolvers = {
         throw new Error("Wrong password");
       }
       return existingUser;
+    },
+
+    enroll: (_, { userId, courseId }) => {
+      const existingEnrollment = enrollments.find(
+        (enrollment) =>
+          enrollment.userId === userId && enrollment.courseId === courseId,
+      );
+      if (existingEnrollment) return existingEnrollment;
+      const enrollment = {
+        userId,
+        courseId,
+        progress: 0,
+      };
+      enrollments.push(enrollment);
+      return enrollment;
     },
   },
 };

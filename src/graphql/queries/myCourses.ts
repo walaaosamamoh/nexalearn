@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const GET_MY_COURSES =  gql`
   query GetMyCourses($userId: ID!){
     myCourses(userId: $userId){
-      progress
+      completedLessons
       course {
         id
         title
@@ -12,6 +12,7 @@ export const GET_MY_COURSES =  gql`
         duration
         level
         category
+        lessons
       }
     }
   }

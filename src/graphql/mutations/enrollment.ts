@@ -5,7 +5,7 @@ export const ENROLL_COURSE = gql`
     enroll(userId: $userId, courseId: $courseId) {
       courseId
       userId
-      progress
+      completedLessons
     }
   }
 `;

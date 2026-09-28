@@ -287,7 +287,7 @@ const typeDefs = `#graphql
   type Enrollment {
     userId: ID!
     courseId: ID!
-    progress: Int!
+    completedLessons: [String!]!
     course: Course!
   }
 
@@ -314,6 +314,7 @@ const typeDefs = `#graphql
     register(name: String!, email: String!, password: String!): User!,
     login(email: String!, password: String!): User!
     enroll(userId: ID!, courseId: ID!): Enrollment!
+    completeLesson(userId: ID!, courseId: ID!, lesson: String!): Enrollment!
   }
 `;
 
@@ -373,9 +374,26 @@ const resolvers = {
       const enrollment = {
         userId,
         courseId,
-        progress: 0,
+        completedLessons: [],
       };
       enrollments.push(enrollment);
+      return enrollment;
+    },
+
+    completeLesson: (_, { userId, courseId, lesson }) => {
+      const enrollment = enrollments.find(
+        (enrollment) =>
+          enrollment.userId === userId && enrollment.courseId === courseId,
+      );
+
+      if (!enrollment) {
+        throw new Error("You are not enrolled in this course");
+      }
+
+      if (!enrollment.completedLessons.includes(lesson)) {
+        enrollment.completedLessons.push(lesson);
+      }
+
       return enrollment;
     },
   },

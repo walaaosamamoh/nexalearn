@@ -1,19 +1,16 @@
-import { useQuery } from "@apollo/client/react"
-import { Link } from "react-router-dom"
+import { useQuery } from "@apollo/client/react";
+import { Link } from "react-router-dom";
 
-import { useAuthStore } from "../../stores/authStore"
-import { GET_MY_COURSES } from "../../graphql/queries/myCourses"
-import { GET_COURSES } from "../../graphql/queries/courses"
+import { useAuthStore } from "../../stores/authStore";
+import { GET_MY_COURSES } from "../../graphql/queries/myCourses";
+import { GET_COURSES } from "../../graphql/queries/courses";
 
-import type {
-  GetMyCoursesData,
-  GetCoursesData,
-} from "../../graphql/types"
+import type { GetMyCoursesData, GetCoursesData } from "../../graphql/types";
 
-import CourseCard from "../../components/courses/courseCard"
+import CourseCard from "../../components/courses/courseCard";
 
 export default function Dashboard() {
-  const user = useAuthStore((state) => state.user)
+  const user = useAuthStore((state) => state.user);
 
   const {
     data: myCoursesData,
@@ -24,19 +21,17 @@ export default function Dashboard() {
       userId: user?.id,
     },
     skip: !user?.id,
-  })
+  });
 
-  const {
-    data: coursesData,
-    loading: coursesLoading,
-  } = useQuery<GetCoursesData>(GET_COURSES)
+  const { data: coursesData, loading: coursesLoading } =
+    useQuery<GetCoursesData>(GET_COURSES);
 
   if (myCoursesLoading) {
     return (
-      <div className="flex min-h-[400px] items-center justify-center">
+      <div className="flex min-h-100 items-center justify-center">
         <p className="text-slate-400">Loading your dashboard...</p>
       </div>
-    )
+    );
   }
 
   if (myCoursesError) {
@@ -46,37 +41,48 @@ export default function Dashboard() {
           Something went wrong while loading your courses.
         </p>
       </div>
-    )
+    );
   }
 
-  const myCourses = myCoursesData?.myCourses ?? []
+  const myCourses = myCoursesData?.myCourses ?? [];
 
-  const enrolledCourseIds = new Set(
-    myCourses.map((item) => item.course.id)
-  )
+  const coursesWithProgress = myCourses.map((item) => {
+    const totalLessons = item.course.lessons.length;
+    const completedLessons = item.completedLessons.length;
+
+    const progress =
+      totalLessons > 0
+        ? Math.round((completedLessons / totalLessons) * 100)
+        : 0;
+
+    return {
+      ...item,
+      progress,
+    };
+  });
+
+  const enrolledCourseIds = new Set(myCourses.map((item) => item.course.id));
 
   const recommendedCourses =
     coursesData?.courses
       .filter((course) => !enrolledCourseIds.has(course.id))
-      .slice(0, 3) ?? []
+      .slice(0, 3) ?? [];
 
   const continueCourse =
-    myCourses.find((item) => item.progress > 0 && item.progress < 100) ??
-    myCourses[0]
+    coursesWithProgress.find((item) => item.progress > 0 && item.progress < 100) ??
+    coursesWithProgress[0];
 
-  const completedCourses = myCourses.filter(
-    (item) => item.progress === 100
-  ).length
+  const completedCourses = coursesWithProgress.filter(
+    (item) => item.progress === 100,
+  ).length;
 
   const averageProgress =
-    myCourses.length > 0
+    coursesWithProgress.length > 0
       ? Math.round(
-          myCourses.reduce(
-            (total, item) => total + item.progress,
-            0
-          ) / myCourses.length
+          coursesWithProgress.reduce((total, item) => total + item.progress, 0) /
+            coursesWithProgress.length,
         )
-      : 0
+      : 0;
 
   return (
     <div className="mx-auto max-w-7xl space-y-10">
@@ -85,10 +91,7 @@ export default function Dashboard() {
         <p className="text-sm text-slate-400">Welcome back 👋</p>
 
         <h1 className="mt-1 text-3xl font-bold tracking-tight text-white">
-          Good evening,{" "}
-          <span className="text-violet-400">
-            {user?.name}
-          </span>
+          Good evening, <span className="text-violet-400">{user?.name}</span>
         </h1>
 
         <p className="mt-2 max-w-xl text-slate-400">
@@ -134,9 +137,7 @@ export default function Dashboard() {
                     </p>
 
                     <div className="mt-4 flex items-center justify-between text-sm">
-                      <span className="text-slate-400">
-                        Progress
-                      </span>
+                      <span className="text-slate-400">Progress</span>
 
                       <span className="font-medium text-white">
                         {continueCourse.progress}%
@@ -180,9 +181,7 @@ export default function Dashboard() {
 
         {/* Progress Summary */}
         <div className="rounded-2xl border border-white/10 bg-white/3 p-6 sm:p-8">
-          <p className="text-sm font-medium text-violet-400">
-            Your Progress
-          </p>
+          <p className="text-sm font-medium text-violet-400">Your Progress</p>
 
           <div className="mt-6">
             <div className="flex items-end justify-between">
@@ -190,9 +189,7 @@ export default function Dashboard() {
                 {averageProgress}%
               </span>
 
-              <span className="text-sm text-slate-400">
-                overall progress
-              </span>
+              <span className="text-sm text-slate-400">overall progress</span>
             </div>
 
             <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-800">
@@ -210,18 +207,14 @@ export default function Dashboard() {
               <p className="text-2xl font-semibold text-white">
                 {myCourses.length}
               </p>
-              <p className="mt-1 text-sm text-slate-400">
-                Enrolled
-              </p>
+              <p className="mt-1 text-sm text-slate-400">Enrolled</p>
             </div>
 
             <div className="rounded-xl border border-white/10 bg-white/3 p-4">
               <p className="text-2xl font-semibold text-white">
                 {completedCourses}
               </p>
-              <p className="mt-1 text-sm text-slate-400">
-                Completed
-              </p>
+              <p className="mt-1 text-sm text-slate-400">Completed</p>
             </div>
           </div>
         </div>
@@ -231,9 +224,7 @@ export default function Dashboard() {
       <section>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-violet-400">
-              Your Learning
-            </p>
+            <p className="text-sm font-medium text-violet-400">Your Learning</p>
 
             <h2 className="mt-1 text-2xl font-semibold text-white">
               My Courses
@@ -265,7 +256,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {myCourses.map((item) => (
+            {coursesWithProgress.map((item) => (
               <CourseCard
                 key={item.course.id}
                 {...item.course}
@@ -299,20 +290,15 @@ export default function Dashboard() {
         </div>
 
         {coursesLoading ? (
-          <p className="mt-6 text-slate-400">
-            Loading recommendations...
-          </p>
+          <p className="mt-6 text-slate-400">Loading recommendations...</p>
         ) : (
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {recommendedCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                {...course}
-              />
+              <CourseCard key={course.id} {...course} />
             ))}
           </div>
         )}
       </section>
     </div>
-  )
+  );
 }

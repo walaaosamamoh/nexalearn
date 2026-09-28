@@ -12,13 +12,13 @@ export interface EnrollCourseData {
   enroll: {
     userId: string
     courseId: string
-    progress: number
+    completedLessons: string[]
   }
 }
 
 export interface GetMyCoursesData {
   myCourses: {
-    progress: number
+    completedLessons: string[]
     course: {
       id: string
       title: string
@@ -27,6 +27,7 @@ export interface GetMyCoursesData {
       duration: string
       level: string
       category: string
+      lessons: string[]
     }
   }[]
 }

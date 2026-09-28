@@ -288,6 +288,7 @@ const typeDefs = `#graphql
     userId: ID!
     courseId: ID!
     progress: Int!
+    course: Course!
   }
 
   type Course {
@@ -306,6 +307,7 @@ const typeDefs = `#graphql
   type Query {
     courses: [Course!]!,
     course(id: ID!): Course
+    myCourses(userId: ID!): [Enrollment!]!
   }
 
   type Mutation {
@@ -320,6 +322,14 @@ const resolvers = {
     courses: () => courses,
     course: (_, args) => {
       return courses.find((course) => course.id === args.id);
+    },
+    myCourses: (_, { userId }) => {
+      return enrollments
+        .filter((enrollment) => enrollment.userId === userId)
+        .map((enrollment) => ({
+          ...enrollment,
+          course: courses.find((course) => course.id === enrollment.courseId),
+        }));
     },
   },
 

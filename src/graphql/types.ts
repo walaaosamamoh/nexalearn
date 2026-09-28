@@ -15,3 +15,18 @@ export interface EnrollCourseData {
     progress: number
   }
 }
+
+export interface GetMyCoursesData {
+  myCourses: {
+    progress: number
+    course: {
+      id: string
+      title: string
+      instructor: string
+      image: string
+      duration: string
+      level: string
+      category: string
+    }
+  }[]
+}

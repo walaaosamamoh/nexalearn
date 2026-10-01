@@ -13,6 +13,7 @@ import Register from "../pages/auth/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoutes from "../components/auth/ProtectedRoutes";
+import Learning from "../pages/dashboard/Learning";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard",
             element: <Dashboard />,
+          },
+          {
+            path: "/learn/:id",
+            element: <Learning />,
           },
         ],
       },

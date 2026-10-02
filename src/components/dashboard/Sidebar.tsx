@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, BookOpen, ChartNoAxesColumn } from "lucide-react";
+import { LayoutDashboard, BookOpen, Award } from "lucide-react";
 
 const links = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { name: "My Courses", path: "/my-courses", icon: BookOpen },
-  { name: "Progress", path: "/progress", icon: ChartNoAxesColumn },
+  { name: "Certificates", path: "/certificates", icon: Award },
 ];
 
 interface Props {

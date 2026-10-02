@@ -25,7 +25,7 @@ export default function CourseCard({
 }: CourseCardProps) {
   return (
     <Link
-      to={`/courses/${id}`}
+      to={enrolled ? `/learn/${id}` : `/courses/${id}`}
       className="group overflow-hidden rounded-2xl border border-white/10 bg-slate-900 transition duration-300 hover:-translate-y-1 hover:border-violet-400/40"
     >
       {/* Image */}
@@ -70,12 +70,11 @@ export default function CourseCard({
         )}
 
         {enrolled && (
-          <Link
-            to={`/learn/${ id }`}
-            className="mt-5 block text-center"
+          <div
+            className="mt-5 text-center text-sm font-medium text-violet-400"
           >
-            Continue Learning
-          </Link>
+            {progress===100? 'Course completed': 'Continue learning'}
+          </div>
         )}
       </div>
     </Link>

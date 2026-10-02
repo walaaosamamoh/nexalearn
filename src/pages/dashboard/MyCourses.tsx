@@ -1,0 +1,97 @@
+import { useQuery } from "@apollo/client/react";
+import { GET_MY_COURSES } from "../../graphql/queries/myCourses";
+import type { GetMyCoursesData } from "../../graphql/types";
+import { useAuthStore } from "../../stores/authStore";
+import CourseCard from "../../components/courses/courseCard";
+import { useState } from "react";
+
+export default function MyCourses() {
+  const user = useAuthStore((state) => state.user);
+  const { data, loading, error } = useQuery<GetMyCoursesData>(GET_MY_COURSES, {
+    variables: { userId: user?.id },
+  });
+  const [activeTab, setActiveTab] = useState("all");
+
+  const coursesWithProgress =
+    data?.myCourses.map((item) => {
+      const totalLessons = item.course.lessons.length;
+      const completedLessons = item.completedLessons.length;
+
+      const progress =
+        totalLessons > 0
+          ? Math.round((completedLessons / totalLessons) * 100)
+          : 0;
+
+      return {
+        ...item.course,
+        progress,
+      };
+    }) ?? [];
+
+  const filteredCourses = coursesWithProgress.filter((course) => {
+    if (activeTab === "in-progress") return course.progress < 100;
+    if (activeTab === "completed") return course.progress === 100;
+    return true;
+  });
+
+  if (loading) {
+    return (
+      <div className="flex min-h-100 items-center justify-center">
+        <p className="text-slate-400">Loading your courses...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-2xl border border-red-400/20 bg-red-400/5 p-6">
+        <p className="text-red-400">
+          Something went wrong while loading your courses.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          My Courses
+        </h1>
+
+        <p className="mt-2 text-sm text-slate-400 sm:text-base">
+          Continue learning and keep making progress.
+        </p>
+      </div>
+
+      <div className="mb-8 flex flex-wrap gap-2">
+        <button
+          onClick={() => setActiveTab("all")}
+          className={`rounded-xl px-4 py-2 text-sm font-medium transition ${activeTab === "all" ? "bg-violet-500 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}
+        >
+          All Courses
+        </button>
+
+        <button
+          onClick={() => setActiveTab("in-progress")}
+          className={`rounded-xl px-4 py-2 text-sm font-medium transition ${activeTab === "in-progress" ? "bg-violet-500 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}
+        >
+          In Progress
+        </button>
+
+        <button
+          onClick={() => setActiveTab("completed")}
+          className={`rounded-xl px-4 py-2 text-sm font-medium transition ${activeTab === "completed" ? "bg-violet-500 text-white" : "text-slate-400 hover:bg-white/5 hover:text-white"}`}
+        >
+          Completed
+        </button>
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-4">
+        {filteredCourses.map((course) => (
+          <CourseCard key={course.id} {...course} enrolled />
+        ))}
+      </div>
+    </div>
+  );
+}

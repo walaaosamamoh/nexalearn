@@ -14,6 +14,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoutes from "../components/auth/ProtectedRoutes";
 import Learning from "../pages/dashboard/Learning";
+import MyCourses from "../pages/dashboard/MyCourses";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
           {
             path: "/learn/:id",
             element: <Learning />,
+          },
+           {
+            path: "/my-courses",
+            element: <MyCourses />,
           },
         ],
       },

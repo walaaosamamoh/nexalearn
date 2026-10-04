@@ -16,6 +16,8 @@ import ProtectedRoutes from "../components/auth/ProtectedRoutes";
 import Learning from "../pages/dashboard/Learning";
 import MyCourses from "../pages/dashboard/MyCourses";
 import Certificates from "../pages/dashboard/Certificates";
+import Settings from "../pages/dashboard/Settings";
+import Profile from "../pages/dashboard/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +83,14 @@ export const router = createBrowserRouter([
           {
             path: "/certificates",
             element: <Certificates />,
+          },
+          {
+            path: "/settings",
+            element: <Settings />,
+          },
+          {
+            path: "/profile",
+            element: <Profile />,
           },
         ],
       },

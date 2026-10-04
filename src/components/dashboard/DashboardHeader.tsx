@@ -1,6 +1,6 @@
 import { ChevronDown, LogOut, Menu, Settings, User } from "lucide-react";
 import { useAuthStore } from "../../stores/authStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -16,24 +16,29 @@ export default function DashboardHeader({ onMenuClick }: Props) {
     logout();
     navigate("/login");
   };
-
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".dropdown")) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+  
   return (
-    <header className="sticky top-0 z-20 border-b border-white/10 px-6 py-4 backdrop-blur-xl sm:px-8">
+    <header className="border-b border-white/10 px-6 py-4 sm:px-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-8">
           <button onClick={onMenuClick} className="cursor-pointer lg:hidden">
             <Menu className="h-5 w-5" />
           </button>
-          <div>
-            <p className="text-sm text-slate-400">Welcome back 👋</p>
-
-            <h1 className="mt-1 text-xl font-semibold text-white">
-              {user?.name}
-            </h1>
-          </div>
         </div>
 
-        <div className="relative">
+        <div className="dropdown relative">
           <button
             onClick={() => setIsOpen((prev) => !prev)}
             className="flex items-center gap-2 rounded-xl p-1.5 transition hover:bg-white/5"

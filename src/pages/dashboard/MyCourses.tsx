@@ -4,6 +4,7 @@ import type { GetMyCoursesData } from "../../graphql/types";
 import { useAuthStore } from "../../stores/authStore";
 import CourseCard from "../../components/courses/courseCard";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function MyCourses() {
   const user = useAuthStore((state) => state.user);
@@ -52,6 +53,7 @@ export default function MyCourses() {
     );
   }
 
+
   return (
     <div>
       <div className="mb-8">
@@ -87,11 +89,49 @@ export default function MyCourses() {
         </button>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-4">
-        {filteredCourses.map((course) => (
-          <CourseCard key={course.id} {...course} enrolled />
-        ))}
-      </div>
+      {filteredCourses.length === 0 ? (
+        <div className="flex min-h-60 items-center justify-center rounded-2xl border border-slate-700 bg-slate-900/40">
+          <div className="max-w-md text-center">
+            <div className="mb-4 text-4xl">📚</div>
+            <h2 className="text-xl font-semibold text-white">
+              {activeTab === "all"
+                ? "No courses yet"
+                : activeTab === "in-progress"
+                  ? "No courses in progress"
+                  : "No completed courses yet"}
+            </h2>
+            <p className="mt-2 text-sm text-slate-400">
+              {activeTab === "all"
+                ? "You haven’t enrolled in any courses yet. Start learning by exploring new topics."
+                : activeTab === "in-progress"
+                  ? "Your in-progress courses will appear here once you start learning."
+                  : "Completed courses will show up here after you finish them."}
+            </p>
+
+            {activeTab === "all" ? (
+              <Link
+                to="/courses"
+                className="mt-5 inline-block rounded-xl bg-violet-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-violet-400"
+              >
+                Explore Courses
+              </Link>
+            ) : (
+              <button
+                onClick={() => setActiveTab("all")}
+                className="mt-5 rounded-xl bg-violet-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-violet-400"
+              >
+                View all courses
+              </button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="grid gap-4 lg:grid-cols-3">
+          {filteredCourses.map((course) => (
+            <CourseCard key={course.id} {...course} enrolled />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

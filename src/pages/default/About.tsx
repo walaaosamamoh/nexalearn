@@ -11,7 +11,7 @@ export default function About() {
             About NexaLearn
           </p>
 
-          <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-5xl">
             Learning should move you forward.
           </h1>
 

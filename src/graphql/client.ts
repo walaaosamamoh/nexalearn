@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client"
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/",
+  uri: import.meta.env.VITE_GRAPHQL_URL,
 })
 
 const client = new ApolloClient({

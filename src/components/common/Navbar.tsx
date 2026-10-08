@@ -1,11 +1,23 @@
 import { Link, NavLink } from "react-router-dom";
 import { useAuthStore } from "../../stores/authStore";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const user = useAuthStore((state) => state.user);
   const [openMenu, setOpenMenu] = useState(false);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".dropdown")) {
+        setOpenMenu(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   return (
     <header className="border-b border-white/10">
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
@@ -88,9 +100,9 @@ export default function Navbar() {
         )}
 
         {/* mobile menu navigation */}
-        <div className="md:hidden ">
+        <div className="md:hidden dropdown">
           <button
-            onClick={() => setOpenMenu(prev => !prev)}
+            onClick={() => setOpenMenu((prev) => !prev)}
             className="rounded-xl bg-violet-500 p-2 text-white transition hover:bg-violet-400"
           >
             <Menu className="w-5 h-5" />

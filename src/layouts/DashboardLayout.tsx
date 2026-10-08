@@ -5,10 +5,11 @@ import { useState } from "react"
 
 export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen]= useState(false)
+  const closeSidebar = () => setSidebarOpen(false);
 
   return (
     <div className="min-h-screen text-white flex">
-      <Sidebar isOpen={sidebarOpen} />
+      <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
 
       <div className="flex-1">
         <DashboardHeader onMenuClick={()=> setSidebarOpen((prev)=> !prev)} />

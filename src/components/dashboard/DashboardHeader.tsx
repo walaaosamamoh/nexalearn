@@ -65,7 +65,7 @@ export default function DashboardHeader({ onMenuClick }: Props) {
               {/* Links */}
               <div className="p-2">
                 <button
-                  onClick={() => navigate("/profile")}
+                  onClick={() => {navigate("/profile"); setIsOpen(false);}}
                   className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
                 >
                   <User className="h-4 w-4" />
@@ -73,7 +73,7 @@ export default function DashboardHeader({ onMenuClick }: Props) {
                 </button>
 
                 <button
-                  onClick={() => navigate("/settings")}
+                  onClick={() => {navigate("/settings"); setIsOpen(false);}}
                   className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
                 >
                   <Settings className="h-4 w-4" />

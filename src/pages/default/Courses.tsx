@@ -39,7 +39,7 @@ export default function Courses() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-12">
+    <div className="mx-auto max-w-7xl px-6 py-10 lg:py-20 sm:px-8 lg:px-12">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         {/* filter */}
         <div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer className="shrink-0 border-t border-white/10">
-      <div className="mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl px-6 py-6 sm:px-8 lg:px-12">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
             <Link to="/home" className="text-xl font-bold text-white">

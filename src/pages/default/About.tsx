@@ -1,3 +1,5 @@
+import { BookOpen, ChartNoAxesColumnIncreasing, Target } from "lucide-react";
+
 export default function About() {
   return (
     <main>
@@ -38,7 +40,7 @@ export default function About() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             <div className="rounded-2xl border border-white/10 bg-slate-900 p-6">
-              <span className="text-2xl">🎯</span>
+              <Target className="h-6 w-6  text-violet-400"/>
 
               <h3 className="mt-5 text-xl font-semibold text-white">
                 Learn with Purpose
@@ -51,7 +53,7 @@ export default function About() {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-slate-900 p-6">
-              <span className="text-2xl">📚</span>
+              <BookOpen className="h-6 w-6  text-violet-400"/>
 
               <h3 className="mt-5 text-xl font-semibold text-white">
                 Learn at Your Pace
@@ -64,7 +66,7 @@ export default function About() {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-slate-900 p-6">
-              <span className="text-2xl">📈</span>
+              <ChartNoAxesColumnIncreasing className="h-6 w-6  text-violet-400"/>
 
               <h3 className="mt-5 text-xl font-semibold text-white">
                 Track Your Progress

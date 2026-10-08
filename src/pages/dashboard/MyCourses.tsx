@@ -5,6 +5,7 @@ import { useAuthStore } from "../../stores/authStore";
 import CourseCard from "../../components/courses/courseCard";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 
 export default function MyCourses() {
   const user = useAuthStore((state) => state.user);
@@ -53,7 +54,6 @@ export default function MyCourses() {
     );
   }
 
-
   return (
     <div>
       <div className="mb-8">
@@ -90,9 +90,11 @@ export default function MyCourses() {
       </div>
 
       {filteredCourses.length === 0 ? (
-        <div className="flex min-h-60 items-center justify-center rounded-2xl border border-slate-700 bg-slate-900/40">
+        <div className="flex min-h-60 p-10 items-center justify-center rounded-2xl border border-slate-700 bg-slate-900/40">
           <div className="max-w-md text-center">
-            <div className="mb-4 text-4xl">📚</div>
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full mb-4 bg-violet-500/10">
+              <BookOpen className="h-7 w-7 text-violet-400" />
+            </div>
             <h2 className="text-xl font-semibold text-white">
               {activeTab === "all"
                 ? "No courses yet"

@@ -8,6 +8,7 @@ import { GET_COURSES } from "../../graphql/queries/courses";
 import type { GetMyCoursesData, GetCoursesData } from "../../graphql/types";
 
 import CourseCard from "../../components/courses/courseCard";
+import { Handshake } from "lucide-react";
 
 export default function Dashboard() {
   const user = useAuthStore((state) => state.user);
@@ -88,7 +89,9 @@ export default function Dashboard() {
     <div className="mx-auto max-w-7xl space-y-10">
       {/* Welcome */}
       <section>
-        <p className="text-sm text-slate-400">Welcome back 👋</p>
+        <p className="flex items-center gap-2 text-sm text-slate-400">Welcome back 
+          <Handshake className="h-4 w-4 text-violet-400"/>
+        </p>
 
         <h1 className="mt-1 text-3xl font-bold tracking-tight text-white">
           Good evening, <span className="text-violet-400">{user?.name}</span>

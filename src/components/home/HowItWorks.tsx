@@ -1,24 +1,26 @@
+import { Search, BookOpen, ChartNoAxesColumnIncreasing } from "lucide-react";
+
 const steps = [
   {
     number: "01",
     title: "Choose a Course",
     description:
       "Explore courses by topic, skill level, and category to find the right one for your goals.",
-    icon: "🔎",
+    icon: Search,
   },
   {
     number: "02",
     title: "Start Learning",
     description:
       "Follow lessons at your own pace and build practical skills through structured learning.",
-    icon: "📚",
+    icon: BookOpen,
   },
   {
     number: "03",
     title: "Track Your Progress",
     description:
       "Monitor completed lessons, course progress, and your learning journey from your dashboard.",
-    icon: "📈",
+    icon: ChartNoAxesColumnIncreasing,
   },
 ];
 
@@ -55,7 +57,11 @@ export default function HowItWorks() {
               </div>
 
               {/* Icon */}
-              <div className="mt-6 text-3xl">{step.icon}</div>
+              <div className="mt-6 flex justify-center">
+                <div className="flex items-center justify-center">
+                  <step.icon className="h-6 w-6 text-violet-400" />
+                </div>
+              </div>
 
               <h3 className="mt-4 text-xl font-semibold text-white">
                 {step.title}

@@ -1,75 +1,120 @@
-# React + TypeScript + Vite
+# NexaLearn — Online Learning Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NexaLearn is a modern e-learning platform built with React and TypeScript. It enables users to explore courses, enroll in learning programs, complete lessons, and track their progress through a personalized student dashboard.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* **Frontend:** [NexaLearn](https://nexalearn-vqud.vercel.app/home)
+* **GraphQL API:** [NexaLearn API](https://nexalearn-5dag.vercel.app/)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Authentication:** User registration and login.
+* **Course Discovery:** Browse available courses and view course details.
+* **Course Enrollment:** Enroll in courses and access them from My Courses.
+* **Learning Experience:** Navigate lessons and mark lessons as completed.
+* **Progress Tracking:** Monitor course completion through the student dashboard.
+* **Student Dashboard:** Access enrolled courses and learning progress.
+* **Protected Routes:** Restrict student pages to authenticated users.
+* **Certificates Page:** View courses that have been completed.
+* **Responsive UI:** Modern interface designed for different screen sizes.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Frontend**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Router
+* Apollo Client
+* Zustand
+* TanStack Form
+* Zod
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Backend**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* Node.js
+* Apollo Server
+* GraphQL
 
+## Getting Started
+
+### Prerequisites
+
+* Node.js and npm
+* Git
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/walaaosamamoh/nexalearn.git
+cd nexalearn
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install frontend dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
+
+### 3. Configure the GraphQL endpoint
+
+Create a `.env` file in the project root if you want to run the frontend locally against a local API:
+
+```env
+VITE_GRAPHQL_URL=http://localhost:4000/
+```
+
+To use the deployed API instead, set `VITE_GRAPHQL_URL` to:
+
+```env
+VITE_GRAPHQL_URL=https://nexalearn-5dag.vercel.app/
+```
+
+### 4. Start the frontend
+
+```bash
+npm run dev
+```
+
+Open the local URL printed by Vite in your terminal.
+
+### 5. Run the backend locally
+
+The GraphQL backend is located in the `mock-api` directory. Install its dependencies and use the development or start command defined in `mock-api/package.json`.
+
+## Project Structure
+
+```text
+nexalearn/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── layouts/
+│   ├── graphql/
+│   └── ...
+├── mock-api/
+│   ├── package.json
+│   └── server.js
+├── public/
+├── package.json
+└── README.md
+```
+
+## Future Improvements
+
+* Persistent database integration
+* Certificate generation and download
+* Profile editing and persistent settings
+
+## Important Notes
+
+NexaLearn is a portfolio project using mock backend data. User accounts and enrollments are stored in memory and may reset when the server restarts. Authentication and data storage are intended for demonstration purposes, not production use. Do not use real passwords or sensitive personal information.
+
+## Author
+
+**Walaa Osama** — Front-End Developer
+
+* [GitHub Profile](https://github.com/walaaosamamoh)
